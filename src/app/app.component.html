@@ -1,6 +1,15 @@
 <!-- <app-interpolacao/>
 <app-control-flow/> -->
-<app-propertie-binding/>
-<router-outlet />
-<app-diretiva/>
+<!-- <app-propertie-binding/>
+<app-diretiva/> -->
 
+<ul>
+  @for(carro of carros; track $index){
+    <li>
+      {{carro.id}} | {{carro.ano}} | {{carro.marca}} | {{carro.nome}} | {{carro.placa}}
+    </li>
+  }
+</ul>
+
+<app-cliente/>
+<router-outlet />

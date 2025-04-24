@@ -1,0 +1,36 @@
+<form [formGroup]="clienteForm" (ngSubmit)="save()">
+<p>
+  <label>Nome:</label>
+  <input type="text" formControlName="nome">
+</p>
+
+<p>
+  <label>Telefone:</label>
+  <input type="text" formControlName="telefone">
+</p>
+
+<p><button type="submit">Salvar</button></p>
+</form>
+
+
+<hr>
+<h2>Lista de clientes</h2>
+
+<table border= "1">
+  <thead>
+    <tr>
+    <th>Nome</th>
+    <th>Telefone</th>
+    <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for(cliente of cliente; track $index){
+    <tr>
+      <td>{{cliente.nome}}</td>
+      <td>{{cliente.telefone}}</td>
+      <td><input type="button" value="editar"/></td>
+    </tr>
+  }
+  </tbody>
+</table>
