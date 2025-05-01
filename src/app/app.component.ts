@@ -8,18 +8,17 @@ import { Carros } from './components/interfaces/Carros';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { HomeComponent } from "./home/home.component";
 import { NavComponent } from './components/nav/nav.component';
+import { TesteComponent } from './components/teste/teste.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    ClienteComponent, NavComponent,HomeComponent
+    ClienteComponent, NavComponent,HomeComponent, TesteComponent
     // PropertieBindingComponent,
     // DiretivaComponent
     //InterpolacaoComponent,
     //ControlFlowComponent,
-    ,
-    HomeComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
