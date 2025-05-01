@@ -1,7 +1,7 @@
 
-export interface Cliente{
-  id:String,
-  nome:string,
-  telefone?:string, //aceita nulos
+export interface Cliente {
+  id: string,
+  nome: string,
+  telefone?: string, //aceita nulos
 
 }

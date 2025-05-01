@@ -6,17 +6,21 @@ import { PropertieBindingComponent } from './components/propertie-binding/proper
 import { DiretivaComponent } from './components/diretiva/diretiva.component';
 import { Carros } from './components/interfaces/Carros';
 import { ClienteComponent } from './components/cliente/cliente.component';
+import { HomeComponent } from "./home/home.component";
+import { NavComponent } from './components/nav/nav.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    ClienteComponent
+    ClienteComponent, NavComponent,HomeComponent
     // PropertieBindingComponent,
     // DiretivaComponent
     //InterpolacaoComponent,
     //ControlFlowComponent,
-  ],
+    ,
+    HomeComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
