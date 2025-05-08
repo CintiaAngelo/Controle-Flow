@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { InterpolacaoComponent } from './components/interpolacao/interpolacao.component';
-import { ControlFlowComponent } from './components/control-flow/control-flow.component';
-import { PropertieBindingComponent } from './components/propertie-binding/propertie-binding.component';
-import { DiretivaComponent } from './components/diretiva/diretiva.component';
 import { Carros } from './components/interfaces/Carros';
-import { ClienteComponent } from './components/cliente/cliente.component';
 import { HomeComponent } from "./home/home.component";
 import { NavComponent } from './components/nav/nav.component';
 import { TesteComponent } from './components/teste/teste.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
-    ClienteComponent, NavComponent,HomeComponent, TesteComponent
+    RouterOutlet, NavComponent,HomeComponent, TesteComponent, ReactiveFormsModule
     // PropertieBindingComponent,
     // DiretivaComponent
     //InterpolacaoComponent,

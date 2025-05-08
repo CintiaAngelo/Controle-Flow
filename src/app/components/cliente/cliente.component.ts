@@ -1,4 +1,4 @@
-import { ClienteService } from './../../services/cliente.service';
+import { ClienteService } from '../../services/cliente.service';
 import { Component } from '@angular/core';
 import { Cliente } from '../interfaces/Cliente';
 import { ReactiveFormsModule, Validators, FormGroup, FormBuilder } from '@angular/forms';
@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cliente.component.html',
   styleUrl: './cliente.component.css'
 })
+
+
 export class ClienteComponent {
 
   clienteForm: FormGroup = new FormGroup({})
@@ -26,7 +28,8 @@ export class ClienteComponent {
   }
 
   list(): void {
-    this.clientes = this.clienteService.list()
+    this.clienteService
+    .list().subscribe((resposta) => (this.clientes= resposta));
   }
 
   ngOnInit(): void {
@@ -66,7 +69,7 @@ export class ClienteComponent {
           telefone: formData.telefone,
         };
         //console.log(clienteAdd)
-        this.clienteService.add(clienteAdd) //Chamando a service para inserir
+        this.clienteService.add(clienteAdd).subscribe() //Chamando a service para inserir
         alert('Inserido com sucesso') //Enviando feedback ao usuário
       }
 
@@ -78,20 +81,20 @@ export class ClienteComponent {
   }
 
   editar(id:string):void{
-    //Buscando todos clientes e filtrando
-    //pelo id enviado como parametro
-    console.log(this.clienteService.list())
+    // //Buscando todos clientes e filtrando
+    // //pelo id enviado como parametro
+    // console.log(this.clienteService.list())
 
-    const cliente = this.clienteService.list().find(c => c.id == id)
+    // const cliente = this.clienteService.list().find(c => c.id == id)
 
-    if(cliente){
-      this.clienteIdEdicao = cliente.id
-      //atribuir os valores ao formulário
-      this.clienteForm.patchValue({
-        nome: cliente.nome,
-        telefone: cliente.telefone
-      })
-    }
+    // if(cliente){
+    //   this.clienteIdEdicao = cliente.id
+    //   //atribuir os valores ao formulário
+    //   this.clienteForm.patchValue({
+    //     nome: cliente.nome,
+    //     telefone: cliente.telefone
+    //   })
+    // }
   }
 
   remover(id:string):void{
