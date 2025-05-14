@@ -1,0 +1,52 @@
+<h2>Gerenciador de Tarefas</h2>
+
+<div class="formulario-tarefa">
+  <h3>Adicionar Nova Tarefa</h3>
+  <form [formGroup]="tarefaForm" (ngSubmit)="adicionarTarefa()">
+    <div>
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" formControlName="titulo">
+      @if (tarefaForm.controls['titulo'].invalid && tarefaForm.controls['titulo'].touched) {
+        <div class="erro-validacao">O título é obrigatório.</div>
+      }
+    </div>
+    <div>
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" formControlName="descricao"></textarea>
+    </div>
+    <div>
+      <label for="dataVencimento">Data de Vencimento:</label>
+      <input type="date" id="dataVencimento" formControlName="dataVencimento">
+    </div>
+    <button type="submit">Adicionar Tarefa</button>
+  </form>
+
+  @if (mensagemSucesso) {
+    <div class="mensagem sucesso">{{ mensagemSucesso }}</div>
+  }
+  @if (mensagemErro) {
+    <div class="mensagem erro">{{ mensagemErro }}</div>
+  }
+</div>
+
+<hr>
+
+<h3>Lista de Tarefas</h3>
+@if (tarefas.length > 0) {
+  <ul>
+    @for (tarefa of tarefas; track tarefa.id) {
+      <li>
+        <strong>{{ tarefa.titulo }}</strong>
+        @if (tarefa.descricao) {
+          <p>Descrição: {{ tarefa.descricao }}</p>
+        }
+        @if (tarefa.dataVencimento) {
+          <p>Vencimento: {{ tarefa.dataVencimento | date }}</p>
+        }
+        <button (click)="removerTarefa(tarefa.id)">Remover</button>
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Nenhuma tarefa cadastrada.</p>
+}

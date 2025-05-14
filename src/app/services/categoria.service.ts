@@ -22,12 +22,12 @@ export class CategoriaService {
   }
 
   // Atualizar uma categoria existente
-  update(id: number, categoria: Categoria): Observable<Categoria> {
+  update(id: number | string, categoria: Categoria): Observable<Categoria> {
     return this.http.put<Categoria>(`${this.apiUrl}/${id}`, categoria);
   }
 
   // Remover uma categoria
-  remove(id: number): Observable<void> {
+  remove(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

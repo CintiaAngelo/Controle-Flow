@@ -6,6 +6,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { TesteComponent } from './components/teste/teste.component';
 import { ProdutoDetalheComponent } from './components/produto-detalhe/produto-detalhe.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
+import { TarefasComponent } from './components/tarefas/tarefas.component';
 
 export const routes: Routes = [
   {path : '', component: HomeComponent},
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {path: 'app-teste', component:TesteComponent},
   {path: 'produto/:id', component:ProdutoDetalheComponent},
   {path: 'categoria', component:CategoriaComponent},
+  {path: 'tarefa', component:TarefasComponent},
   {path: '**', component:NotfoundComponent}
 
 ];
