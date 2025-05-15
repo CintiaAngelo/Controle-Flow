@@ -1,3 +1,4 @@
+import { BeneficioComponent } from './components/beneficio/beneficio.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
@@ -16,6 +17,7 @@ export const routes: Routes = [
   {path: 'produto/:id', component:ProdutoDetalheComponent},
   {path: 'categoria', component:CategoriaComponent},
   {path: 'tarefa', component:TarefasComponent},
+  {path: 'beneficio', component:BeneficioComponent},
   {path: '**', component:NotfoundComponent}
 
 ];

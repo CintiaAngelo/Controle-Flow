@@ -1,0 +1,42 @@
+<h2>Gerenciador de Beneficios</h2>
+
+<div class="formulario-beneficio">
+  <h3>Adicionar Novo Beneficio</h3>
+  <form [formGroup]="beneficioForm" (ngSubmit)="adicionarBeneficio()">
+    <div>
+      <label for="nome">Nome do Beneficio:</label>
+      <input type="text" id="nome" formControlName="nome" required>
+    </div>
+    <div>
+      <label for="imagem">Imagem:</label>
+      <input type="text" id="imagem" formControlName="imagem" required>
+    </div>
+
+    <button type="submit">Adicionar Beneficio</button>
+  </form>
+
+  @if (mensagemSucesso) {
+    <div class="mensagem sucesso">{{ mensagemSucesso }}</div>
+  }
+  @if (mensagemErro) {
+    <div class="mensagem erro">{{ mensagemErro }}</div>
+  }
+</div>
+
+<hr>
+
+<h3>Lista de Beneficios</h3>
+@if (beneficios.length > 0) {
+  <ul>
+    @for (beneficio of beneficios; track beneficio.id) {
+      <li>
+        <strong>{{ beneficio.nome }}</strong>
+        <img src="{{ beneficio.imagem }}" alt="imagem">
+
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Nenhum benefício cadastrado.</p>
+}
+<!-- <button (click)="removerBeneficio(beneficio.id)">Remover</button> -->
