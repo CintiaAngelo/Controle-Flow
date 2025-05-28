@@ -15,23 +15,27 @@ export class BeneficioService {
     return this.http.get<Beneficio[]>(this.apiUrl);
   }
 
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   add(beneficio: Beneficio) {
     const httpHeaders = {
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'max-content-length': '10485760' // Permitir até 10MB
       }
     };
     return this.http.post<Beneficio>(this.apiUrl, beneficio, httpHeaders);
   }
 
-  update(id: number, beneficio: Beneficio): Observable<Beneficio> {
+  update(id: string, beneficio: Beneficio): Observable<Beneficio> {
     const httpHeaders = {
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'max-content-length': '10485760' // Permitir até 10MB
       }
     };
     return this.http.put<Beneficio>(`${this.apiUrl}/${id}`, beneficio, httpHeaders);

@@ -1,18 +1,90 @@
 <h2>Gerenciador de Beneficios</h2>
 
+<!-- Seção de estatísticas -->
+<div class="estatisticas-perfil">
+  <h3>Estatísticas por Perfil</h3>
+  <div class="cards-container">
+    <div class="card-estatistica">
+      <div class="card-titulo">Gerente</div>
+      <div class="card-valor">{{ contagemPorPerfil['gerente'] || 0 }}</div>
+    </div>
+    <div class="card-estatistica">
+      <div class="card-titulo">Coordenador</div>
+      <div class="card-valor">{{ contagemPorPerfil['coordenador'] || 0 }}</div>
+    </div>
+    <div class="card-estatistica">
+      <div class="card-titulo">Analista</div>
+      <div class="card-valor">{{ contagemPorPerfil['analista'] || 0 }}</div>
+    </div>
+    <div class="card-estatistica">
+      <div class="card-titulo">Sem Perfil</div>
+      <div class="card-valor">{{ contagemPorPerfil['sem_perfil'] || 0 }}</div>
+    </div>
+    <div class="card-estatistica total">
+      <div class="card-titulo">Total</div>
+      <div class="card-valor">{{ beneficios.length }}</div>
+    </div>
+  </div>
+  
+  <!-- Total gasto em benefícios -->
+  <div class="total-gasto-container">
+    <div class="card-estatistica total-gasto">
+      <div class="card-titulo">Total Gasto em Benefícios</div>
+      <div class="card-valor">R$ {{ totalGasto.toFixed(2) }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulário de adicionar/editar benefício -->
 <div class="formulario-beneficio">
-  <h3>Adicionar Novo Beneficio</h3>
-  <form [formGroup]="beneficioForm" (ngSubmit)="adicionarBeneficio()">
+  <h3>{{ beneficioIdEdicao ? 'Editar' : 'Adicionar Novo' }} Beneficio</h3>
+  <form [formGroup]="beneficioForm" (ngSubmit)="save()">
     <div>
       <label for="nome">Nome do Beneficio:</label>
       <input type="text" id="nome" formControlName="nome" required>
     </div>
+    
+    <div>
+      <label for="perfil">Perfil de Acesso:</label>
+      <select id="perfil" formControlName="perfil" required>
+        <option value="">Selecione um perfil</option>
+        <option value="gerente">Gerente</option>
+        <option value="coordenador">Coordenador</option>
+        <option value="analista">Analista</option>
+      </select>
+    </div>
+    
+    <div>
+      <label for="valor">Valor do Benefício (R$):</label>
+      <input type="number" id="valor" formControlName="valor" required min="0" step="0.01">
+    </div>
+    
+    <div>
+      <label for="ativo">Status:</label>
+      <select id="ativo" formControlName="ativo">
+        <option [ngValue]="true">Ativo</option>
+        <option [ngValue]="false">Inativo</option>
+      </select>
+    </div>
+    
     <div>
       <label for="imagem">Imagem:</label>
-      <input type="text" id="imagem" formControlName="imagem" required>
+      <input type="file" id="imagem" (change)="onFileSelected($event)" accept="image/*">
+      
+      <!-- Visualização prévia da imagem -->
+      @if (imagemPreview) {
+        <div class="imagem-preview">
+          <img [src]="imagemPreview" alt="Preview">
+        </div>
+      }
     </div>
 
-    <button type="submit">Adicionar Beneficio</button>
+    <div class="acoes-form">
+      <button type="submit">{{ beneficioIdEdicao ? 'Atualizar' : 'Adicionar' }} Beneficio</button>
+      @if (beneficioIdEdicao) {
+        <button type="button" (click)="resetForm(); beneficioIdEdicao = null;">Cancelar</button>
+      }
+    </div>
   </form>
 
   @if (mensagemSucesso) {
@@ -25,18 +97,82 @@
 
 <hr>
 
-<h3>Lista de Beneficios</h3>
-@if (beneficios.length > 0) {
-  <ul>
-    @for (beneficio of beneficios; track beneficio.id) {
-      <li>
-        <strong>{{ beneficio.nome }}</strong>
-        <img src="{{ beneficio.imagem }}" alt="imagem">
+<!-- Filtros de benefícios -->
+<div class="filtros-container">
+  <h3>Filtrar Benefícios</h3>
+  <div class="filtros-grid">
+    <div class="filtro-item">
+      <label for="filtroNome">Nome:</label>
+      <input type="text" id="filtroNome" [(ngModel)]="filtros.nome" (input)="aplicarFiltros()">
+    </div>
+    <div class="filtro-item">
+      <label for="filtroPerfil">Perfil:</label>
+      <select id="filtroPerfil" [(ngModel)]="filtros.perfil" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option value="gerente">Gerente</option>
+        <option value="coordenador">Coordenador</option>
+        <option value="analista">Analista</option>
+      </select>
+    </div>
+    <div class="filtro-item">
+      <label for="filtroValorMin">Valor Mínimo:</label>
+      <input type="number" id="filtroValorMin" [(ngModel)]="filtros.valorMin" (input)="aplicarFiltros()">
+    </div>
+    <div class="filtro-item">
+      <label for="filtroValorMax">Valor Máximo:</label>
+      <input type="number" id="filtroValorMax" [(ngModel)]="filtros.valorMax" (input)="aplicarFiltros()">
+    </div>
+    <div class="filtro-item">
+      <label for="filtroStatus">Status:</label>
+      <select id="filtroStatus" [(ngModel)]="filtros.ativo" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option value="true">Ativos</option>
+        <option value="false">Inativos</option>
+      </select>
+    </div>
+    <div class="filtro-botoes">
+      <button (click)="limparFiltros()">Limpar Filtros</button>
+    </div>
+  </div>
+</div>
 
+<!-- Lista de benefícios -->
+<h3>Lista de Beneficios</h3>
+@if (beneficiosFiltrados.length > 0) {
+  <ul class="lista-beneficios">
+    @for (beneficio of beneficiosFiltrados; track beneficio.id) {
+      <li [ngClass]="{'inativo': !beneficio.ativo}">
+        <div class="status-indicator" [ngClass]="{'ativo': beneficio.ativo, 'inativo': !beneficio.ativo}"></div>
+        <div class="beneficio-info">
+          <strong>{{ beneficio.nome }}</strong>
+          
+          @if (beneficio.imagem) {
+            <div class="beneficio-imagem">
+              <img [src]="beneficio.imagem" alt="Imagem do benefício">
+            </div>
+          } @else {
+            <div class="beneficio-imagem sem-imagem">
+              <span>Sem imagem</span>
+            </div>
+          }
+          
+          <p>Perfil: <span class="destaque">{{ beneficio.perfil }}</span></p>
+          <p>Valor: <span class="destaque">R$ {{ beneficio.valor?.toFixed(2) || '0.00' }}</span></p>
+          <p>Status: <span [ngClass]="{'status-ativo': beneficio.ativo, 'status-inativo': !beneficio.ativo}">
+            {{ beneficio.ativo ? 'Ativo' : 'Inativo' }}
+          </span></p>
+        </div>
+        
+        <div class="beneficio-acoes">
+          <button (click)="editarBeneficio(beneficio.id)">Editar</button>
+          <button (click)="alterarStatus(beneficio.id)">{{ beneficio.ativo ? 'Desativar' : 'Ativar' }}</button>
+          <button (click)="removerBeneficio(beneficio.id)">Remover</button>
+        </div>
       </li>
     }
   </ul>
 } @else {
-  <p>Nenhum benefício cadastrado.</p>
+  <div class="sem-beneficios">
+    <p>Nenhum benefício encontrado com os filtros selecionados.</p>
+  </div>
 }
-<!-- <button (click)="removerBeneficio(beneficio.id)">Remover</button> -->

@@ -37,13 +37,13 @@
   ],
   "tarefas": [
     {
-      "id": 1,
+      "id": "1",
       "titulo": "Fazer relatório",
       "descricao": "Relatório das vendas do mês",
       "dataVencimento": "2025-05-20"
     },
     {
-      "id": 2,
+      "id": "2",
       "titulo": "Enviar e-mails",
       "descricao": "Enviar follow-up para clientes",
       "dataVencimento": "2025-05-18"
@@ -51,40 +51,44 @@
   ],
   "beneficios": [
     {
-      "id": "dfafs",
-      "nome": "Plano de saúde",
-      "imagem": "imagem.png"
-    },
-    {
-      "id": "ddsaf",
-      "nome": "Gympass",
-      "imagem": "imagem2.png"
-    },
-    {
-      "id": "e851",
-      "titulo": "vr",
-      "descricao": "",
-      "dataVencimento": ""
-    },
-    {
-      "id": "8bcb",
-      "nome": "VR",
-      "imagem": ""
-    },
-    {
       "id": "49bd",
       "nome": "va",
-      "imagem": ""
+      "imagem": "",
+      "perfil": "analista",
+      "valor": 300,
+      "ativo": true
     },
     {
-      "id": "efcc",
-      "nome": "VR",
-      "imagem": "fedf"
+      "id": "4255",
+      "nome": "Plano de Saúde Premium",
+      "imagem": "",
+      "perfil": "gerente",
+      "valor": 500,
+      "ativo": false
     },
     {
-      "id": "63ee",
-      "nome": "salario",
-      "imagem": "edf"
+      "id": "b321",
+      "nome": "Auxílio Educação",
+      "imagem": "",
+      "perfil": "coordenador",
+      "valor": 200,
+      "ativo": false
+    },
+    {
+      "id": "c456",
+      "nome": "Vale Transporte",
+      "imagem": "",
+      "perfil": "analista",
+      "valor": 150,
+      "ativo": true
+    },
+    {
+      "id": "d789",
+      "nome": "Gympass",
+      "imagem": "",
+      "perfil": "gerente",
+      "valor": 120,
+      "ativo": false
     }
   ]
 }
